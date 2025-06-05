@@ -122,7 +122,7 @@ jobs:
         run: |
           echo "GITHUB_RUNS_ON=${{env.GITHUB_RUNS_ON}}"
   Build:
-    runs-on: ${{ fromJSON('["${{ inputs.runs-on }}"]') }}
+    runs-on: ${{ fromJSON('["${{inputs.runs-on}}"]') }}
     #runs-on: ubuntu-latest
     permissions:
       actions: read
