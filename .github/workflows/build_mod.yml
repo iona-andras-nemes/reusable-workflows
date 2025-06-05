@@ -1,0 +1,142 @@
+name: trendy-workflow-actions/build
+
+on:
+  workflow_call:
+    inputs:
+      runs-on:
+        required: false
+        default: "ubuntu-latest"
+        type: string
+      runs-on-extra-tag1:
+        required: false
+        default: ""
+        type: string
+      runs-on-extra-tag2:
+        required: false
+        default: ""
+        type: string
+      allow-to-skip-build:
+        required: false
+        default: false
+        type: boolean
+      text-to-find-in-commit-to-skip-build:
+        required: false
+        default: "[skip ci]"
+        type: string
+      notify-teams-on-build-exit:
+        required: false
+        default: false
+        type: boolean
+      copy-platform-config:
+        required: false
+        default: true
+        type: boolean
+      create-npmrc:
+        required: false
+        default: true
+        type: boolean
+      create-jfrog-npmrc:
+        required: false
+        default: false
+        type: boolean
+      create-ion-analytics-npmrc:
+        required: false
+        default: false
+        type: boolean
+      setup-node:
+        required: false
+        default: true
+        type: boolean
+      setup-cdflow2:
+        required: false
+        default: false
+        type: boolean
+      configure-aws-region:
+        required: false
+        default: "eu-west-1"
+        type: string
+      copy-platform-config-src-bucket-prefix:
+        required: false
+        default: "s3://acuris-platform-config"
+        type: string
+      copy-platform-config-dest-path-prefix:
+        required: false
+        default: "./platform-config"
+        type: string
+      copy-platform-config-download-list-json:
+        required: false
+        default: "[]"
+        type: string
+      setup-node-version:
+        required: false
+        default: 20
+        type: number
+      pre-build-commands-json:
+        required: false
+        default: "[]"
+        type: string
+      build-commands-json:
+        required: false
+        default: "[]"
+        type: string
+      post-build-commands-json:
+        required: false
+        default: "[]"
+        type: string
+      login-to-docker:
+        required: false
+        default: true
+        type: boolean
+      expose-github-runtime:
+        required: false
+        default: true
+        type: boolean
+      install-missing-commands:
+        required: false
+        default: false
+        type: boolean
+    secrets:
+      MSTEAMS_WEBHOOK:
+        required: false
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      NPM_ACCESS_TOKEN:
+        required: true
+      NPM_JFROG_TOKEN:
+        required: false
+      DOCKER_USERNAME:
+        required: true
+      DOCKER_PASSWORD:
+        required: true
+
+  Build:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Run build
+        uses: iona-andras-nemes/reusable-workflows/.github/actions/run-build@master
+        with:
+          allow-to-skip-build: ${{ inputs.allow-to-skip-build }}
+          text-to-find-in-commit-to-skip-build: ${{ inputs.text-to-find-in-commit-to-skip-build }}
+          notify-teams-on-build-exit: ${{ inputs.notify-teams-on-build-exit }}
+          copy-platform-config: ${{ inputs.copy-platform-config }}
+          create-npmrc: ${{ inputs.create-npmrc }}
+          create-jfrog-npmrc: ${{ inputs.create-jfrog-npmrc }}
+          create-ion-analytics-npmrc: ${{ inputs.create-ion-analytics-npmrc }}
+          setup-node: ${{ inputs.setup-node }}
+          setup-cdflow2: ${{ inputs.setup-cdflow2 }}
+          configure-aws-region: ${{ inputs.configure-aws-region }}
+          copy-platform-config-src-bucket-prefix: ${{ inputs.copy-platform-config-src-bucket-prefix }}
+          copy-platform-config-dest-path-prefix: ${{ inputs.copy-platform-config-dest-path-prefix }}
+          copy-platform-config-download-list-json: ${{ inputs.copy-platform-config-download-list-json }}
+          setup-node-version: ${{ inputs.setup-node-version }}
+          pre-build-commands-json: ${{ inputs.pre-build-commands-json }}
+          build-commands-json: ${{ inputs.build-commands-json }}
+          post-build-commands-json: ${{ inputs.post-build-commands-json }}
+          login-to-docker: ${{ inputs.login-to-docker }}
+          expose-github-runtime: ${{ inputs.expose-github-runtime }}
+          install-missing-commands: ${{ inputs.install-missing-commands }}
