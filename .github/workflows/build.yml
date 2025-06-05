@@ -112,11 +112,11 @@ on:
         required: true
 
 env:
-  GITHUB_RUNS_ON: "${{ inputs.runs-on }}${{ inputs.runs-on-extra-tag1 != '' && ',' || '' }}${{ inputs.runs-on-extra-tag1 }}${{ inputs.runs-on-extra-tag2 != '' && ',' || '' }}${{ inputs.runs-on-extra-tag2 }}"
+  GITHUB_RUNS_ON: "${{ inputs.runs-on }}${{ inputs.runs-on-extra-tag1 != '' && ', ' || '' }}${{ inputs.runs-on-extra-tag1 }}${{ inputs.runs-on-extra-tag2 != '' && ', ' || '' }}${{ inputs.runs-on-extra-tag2 }}"
 
 jobs:
   Log:
-    runs-on: "ubuntu-latest"
+    runs-on: [ubuntu-latest, linux, x64]
     steps:
       - name: Log environment variables
         run: |
