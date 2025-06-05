@@ -9,7 +9,7 @@ on:
         type: string
       runs-on-json:
         required: false
-        default: "[\"ubuntu-latest\"]"
+        default: '["ubuntu-latest"]'
         type: string
       runs-on-extra-tag1:
         required: false
@@ -116,7 +116,7 @@ on:
         required: true
 
 env:
-  GITHUB_RUNS_ON: "[\"${{ inputs.runs-on }}\" ${{ inputs.runs-on-extra-tag1 != '' && ', ' || '' }} \"${{ inputs.runs-on-extra-tag1 }}\" ${{ inputs.runs-on-extra-tag2 != '' && ', ' || '' }} \"${{ inputs.runs-on-extra-tag2 }}\"]"
+  GITHUB_RUNS_ON: '["${{ inputs.runs-on }}" ${{ inputs.runs-on-extra-tag1 != '''' && '', '' || '''' }} "${{ inputs.runs-on-extra-tag1 }}" ${{ inputs.runs-on-extra-tag2 != '''' && '', '' || '''' }} "${{ inputs.runs-on-extra-tag2 }}"]'
 
 jobs:
   Log:
@@ -125,9 +125,10 @@ jobs:
       - name: Log environment variables
         run: |
           echo "GITHUB_RUNS_ON=${{env.GITHUB_RUNS_ON}}"
+          echo "runs-on=${{ inputs.runs-on=='ubuntu-latest' && 'ubuntu-latest' || inputs.runs-on-json }}"
   Build:
-    runs-on: ${{ fromJSON(inputs.runs-on-json) }}
-    #runs-on: ubuntu-latest
+    #runs-on: ${{ fromJSON(inputs.runs-on-json) }}
+    runs-on: ${{ inputs.runs-on=='ubuntu-latest' && 'ubuntu-latest' || fromJSON(inputs.runs-on-json) }}
     permissions:
       actions: read
       contents: read
@@ -172,7 +173,7 @@ jobs:
           docker info
       - name: Expose GitHub Runtime
         if: ${{ inputs.expose-github-runtime }}
-        uses: crazy-max/ghaction-github-runtime@v3  
+        uses: crazy-max/ghaction-github-runtime@v3
       - name: Copy platform-config from s3
         if: ${{ inputs.copy-platform-config }}
         run: |
