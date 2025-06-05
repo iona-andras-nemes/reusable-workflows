@@ -112,12 +112,16 @@ on:
         required: true
 
 env:
-  GITHUB_RUNS_ON1: "${{ inputs.runs-on }}${{runs-on-extra-tag1 != '' && ', ${{inputs.runs-on-extra-tag1}}'' || '' }}{{runs-on-extra-tag2 != '' && ', ${{inputs.runs-on-extra-tag2}}'' || '' }}"
+  #GITHUB_RUNS_ON1: "${{ inputs.runs-on }}${{runs-on-extra-tag1 != '' && ', ${{inputs.runs-on-extra-tag1}}'' || '' }}{{runs-on-extra-tag2 != '' && ', ${{inputs.runs-on-extra-tag2}}'' || '' }}"
   GITHUB_RUNS_ON: ${{ inputs.runs-on }}
+  GITHUB_RUNS_ON_SEPPARATOR: ${{ runs-on-extra-tag1 != '' && ',' || '' }}
+  GITHUB_RUNS_ON2: ${{ inputs.runs-on-extra-tag1 }}
+  GITHUB_RUNS_ON2_SEPPARATOR: ${{ runs-on-extra-tag2 != '' && ',' || '' }}
+  GITHUB_RUNS_ON3: ${{ inputs.runs-on-extra-tag2 }}
 
 jobs:
   Build:
-    runs-on: ${{ env.GITHUB_RUNS_ON }}
+    runs-on: "${{ env.GITHUB_RUNS_ON }}${{env.GITHUB_RUNS_ON_SEPPARATOR}}${{env.GITHUB_RUNS_ON2}}${{env.GITHUB_RUNS_ON2_SEPPARATOR}}${{env.GITHUB_RUNS_ON3}}"
     permissions:
       actions: read
       contents: read
