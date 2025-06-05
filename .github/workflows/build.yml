@@ -111,17 +111,18 @@ on:
       DOCKER_PASSWORD:
         required: true
 
-# env:
-#   #GITHUB_RUNS_ON1: "${{ inputs.runs-on }}${{runs-on-extra-tag1 != '' && ', ${{inputs.runs-on-extra-tag1}}'' || '' }}{{runs-on-extra-tag2 != '' && ', ${{inputs.runs-on-extra-tag2}}'' || '' }}"
-#   GITHUB_RUNS_ON: "${{ inputs.runs-on }}"
-#   GITHUB_RUNS_ON_SEPPARATOR: "${{ inputs.runs-on-extra-tag1 != '' && ',' || '' }}"
-#   GITHUB_RUNS_ON2: "${{ inputs.runs-on-extra-tag1 }}"
-#   GITHUB_RUNS_ON2_SEPPARATOR: "${{ inputs.runs-on-extra-tag2 != '' && ',' || '' }}"
-#   GITHUB_RUNS_ON3: "${{ inputs.runs-on-extra-tag2 }}"
+env:
+  GITHUB_RUNS_ON: "${{ inputs.runs-on }}${{ inputs.runs-on-extra-tag1 != '' && ',' || '' }}${{ inputs.runs-on-extra-tag1 }}${{ inputs.runs-on-extra-tag2 != '' && ',' || '' }}${{ inputs.runs-on-extra-tag2 }}"
 
 jobs:
+  Log:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Log environment variables
+        run: |
+          echo "GITHUB_RUNS_ON=${{env.GITHUB_RUNS_ON}}"
   Build:
-    runs-on: "${{ inputs.runs-on }}${{ inputs.runs-on-extra-tag1 != '' && ',' || '' }}${{ inputs.runs-on-extra-tag1 }}${{ inputs.runs-on-extra-tag2 != '' && ',' || '' }}${{ inputs.runs-on-extra-tag2 }}"
+    runs-on: "ubuntu-latest"
     permissions:
       actions: read
       contents: read
