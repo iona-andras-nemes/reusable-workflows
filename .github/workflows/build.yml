@@ -125,7 +125,8 @@ jobs:
       - name: Log environment variables
         run: |
           echo "GITHUB_RUNS_ON=${{env.GITHUB_RUNS_ON}}"
-          echo "runs-on=${{ startsWith(inputs.runs-on,'ubuntu-latest') && 'ubuntu-latest' || inputs.runs-on-json }}"
+          echo "runs-on=${{ inputs.runs-on=='ubuntu-latest' && 'ubuntu-latest' || inputs.runs-on-json }}"
+          echo "runs-ons=${{ startsWith(inputs.runs-on,'ubuntu-latest') && 'ubuntu-latest' || inputs.runs-on-json }}"
   Build:
     #runs-on: ${{ fromJSON(inputs.runs-on-json) }}
     runs-on: ${{ inputs.runs-on=='ubuntu-latest' && 'ubuntu-latest' || fromJSON(inputs.runs-on-json) }}
