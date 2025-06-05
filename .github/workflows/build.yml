@@ -7,6 +7,10 @@ on:
         required: false
         default: "ubuntu-latest"
         type: string
+      runs-on-json:
+        required: false
+        default: "[\"ubuntu-latest\"]"
+        type: string
       runs-on-extra-tag1:
         required: false
         default: ""
@@ -122,7 +126,7 @@ jobs:
         run: |
           echo "GITHUB_RUNS_ON=${{env.GITHUB_RUNS_ON}}"
   Build:
-    runs-on: ${{ fromJSON("[\"${{inputs.runs-on}}\"]") }}
+    runs-on: ${{ fromJSON(input.runs-on-json) }}
     #runs-on: ubuntu-latest
     permissions:
       actions: read
