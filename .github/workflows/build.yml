@@ -126,7 +126,7 @@ jobs:
         run: |
           echo "GITHUB_RUNS_ON=${{env.GITHUB_RUNS_ON}}"
   Build:
-    runs-on: ${{ fromJSON(input.runs-on-json) }}
+    runs-on: ${{ fromJSON(inputs.runs-on-json) }}
     #runs-on: ubuntu-latest
     permissions:
       actions: read
