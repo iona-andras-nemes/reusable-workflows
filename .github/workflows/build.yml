@@ -5,15 +5,15 @@ on:
     inputs:
       runs-on:
         required: false
-        default: "ubuntu-22.04"
+        default: "ubuntu-latest"
         type: string
       runs-on-extra-tag1:
         required: false
-        default: "ubuntu-22.04"
+        default: "ubuntu-latest"
         type: string
       runs-on-extra-tag2:
         required: false
-        default: "ubuntu-22.04"
+        default: "ubuntu-latest"
         type: string
       allow-to-skip-build:
         required: false
@@ -115,7 +115,9 @@ jobs:
   Build:
     runs-on:
       [
-        "${{ inputs.runs-on }}"
+        "${{ inputs.runs-on }}",
+        "${{ inputs.runs-on-extra-tag1 }}",
+        "${{ inputs.runs-on-extra-tag2 }}",
       ]
     permissions:
       actions: read
