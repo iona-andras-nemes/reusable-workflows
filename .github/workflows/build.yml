@@ -111,9 +111,13 @@ on:
       DOCKER_PASSWORD:
         required: true
 
+env:
+  GITHUB_RUNS_ON1: "${{ inputs.runs-on }}${{runs-on-extra-tag1 != '' && ', ${{inputs.runs-on-extra-tag1}}'' || '' }}{{runs-on-extra-tag2 != '' && ', ${{inputs.runs-on-extra-tag2}}'' || '' }}"
+  GITHUB_RUNS_ON: ${{ inputs.runs-on }}
+
 jobs:
   Build:
-    runs-on: "${{ inputs.runs-on }}${{runs-on-extra-tag1 != '' && ',${{inputs.runs-on-extra-tag1}}'' || '' }}{{runs-on-extra-tag2 != '' && ',${{inputs.runs-on-extra-tag2}}'' || '' }}"
+    runs-on: ${{ env.GITHUB_RUNS_ON }}
     permissions:
       actions: read
       contents: read
@@ -158,7 +162,7 @@ jobs:
           docker info
       - name: Expose GitHub Runtime
         if: ${{ inputs.expose-github-runtime }}
-        uses: crazy-max/ghaction-github-runtime@v3  
+        uses: crazy-max/ghaction-github-runtime@v3
       - name: Copy platform-config from s3
         if: ${{ inputs.copy-platform-config }}
         run: |
