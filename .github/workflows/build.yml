@@ -9,7 +9,7 @@ on:
         type: string
       runs-on-json:
         required: false
-        default: '["ubuntu-latest"]'
+        default: ''
         type: string
       runs-on-extra-tag1:
         required: false
@@ -126,10 +126,11 @@ jobs:
         run: |
           echo "GITHUB_RUNS_ON=${{env.GITHUB_RUNS_ON}}"
           echo "runs-on=${{ inputs.runs-on=='ubuntu-latest' && 'ubuntu-latest' || inputs.runs-on-json }}"
-          echo "runs-ons=${{ startsWith(inputs.runs-on,'ubuntu-latest') && 'ubuntu-latest' || inputs.runs-on-json }}"
+          echo "runs-on2=${{ startsWith(inputs.runs-on,'ubuntu-latest') && 'ubuntu-latest' || inputs.runs-on-json }}"
+          echo "runs-on3=${{ inputs.runs-on=='ubuntu-latest' && 'ubuntu-latest' || (inputs.runs-on-json=='' && '["self-hosted", "linux","aws"]' || inputs.runs-on-json) }}"
   Build:
     #runs-on: ${{ fromJSON(inputs.runs-on-json) }}
-    runs-on: ${{ inputs.runs-on=='ubuntu-latest' && 'ubuntu-latest' || fromJSON(inputs.runs-on-json) }}
+    runs-on: ${{ inputs.runs-on=='ubuntu-latest' && 'ubuntu-latest' || (inputs.runs-on-json=='' && fromJSON('["self-hosted", "linux","aws"]') || fromJSON(inputs.runs-on-json)) }}
     permissions:
       actions: read
       contents: read
