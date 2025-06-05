@@ -117,14 +117,14 @@ env:
 
 jobs:
   Log:
-    runs-on: [ubuntu-latest, linux, x64]
+    runs-on: ubuntu-latest
     steps:
       - name: Log environment variables
         run: |
           echo "GITHUB_RUNS_ON=${{env.GITHUB_RUNS_ON}}"
           echo "GITHUB_RUNS_ON2=${{env.GITHUB_RUNS_ON2}}"
   Build:
-    runs-on: "ubuntu-latest"
+    runs-on: [ubuntu-latest, linux, x64]
     permissions:
       actions: read
       contents: read
