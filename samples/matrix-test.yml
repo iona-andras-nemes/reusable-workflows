@@ -20,7 +20,7 @@ on:
 
 jobs:
   Build-and-Test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
@@ -41,7 +41,7 @@ jobs:
               value: 'Build'
   Deploy:
     needs: Build-and-Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       max-parallel: 1
       fail-fast: true

@@ -129,7 +129,7 @@ on:
 
 jobs:
   Build-and-Test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
@@ -204,7 +204,7 @@ jobs:
           ${{ inputs.step-run-integration-test-in-docker-command }}
   Deploy-to-aslive:
     needs: Build-and-Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
@@ -281,7 +281,7 @@ jobs:
           done
   Deploy-to-live:
     needs: Deploy-to-aslive
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
