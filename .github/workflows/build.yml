@@ -128,10 +128,10 @@ jobs:
           
           echo "input-runs-on=${{ inputs.runs-on}}"
           echo "runs-on-json=${{ inputs.runs-on-json}}"
-          echo "runs-on=${{ inputs.runs-on=='' && 'ubuntu-latest' || (inputs.runs-on-json=='' && '["self-hosted", "linux","aws"]' || inputs.runs-on-json) }}"
+          echo "runs-on=${{ (inputs.runs-on=='' && inputs.runs-on-json=='') && 'ubuntu-latest' || (inputs.runs-on-json=='' && '["self-hosted", "linux","aws"]' || inputs.runs-on-json) }}"
   Build:
     #runs-on: ${{ fromJSON(inputs.runs-on-json) }}
-    runs-on: ${{ inputs.runs-on=='' && 'ubuntu-latest' || (inputs.runs-on-json=='' && fromJSON('["self-hosted", "linux","aws"]') || fromJSON(inputs.runs-on-json)) }}
+    runs-on: ${{ (inputs.runs-on=='' && inputs.runs-on-json=='') && 'ubuntu-latest' || (inputs.runs-on-json=='' && fromJSON('["self-hosted", "linux","aws"]') || fromJSON(inputs.runs-on-json)) }}
     permissions:
       actions: read
       contents: read
